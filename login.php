@@ -13,12 +13,14 @@ $pass = $_POST['pass'];
 $response = authentication($user,$pass);
 if($response == false)
   {
-    echo "Login Failed";
+    echo "Login Failed. Please enter correct credentials or register for an account";
+  header( "Refresh:5; url=login.html", true, 303);
   }
   else
   {
   echo "Login Successful!";
   $_SESSION['user'] = $user;
-  echo $_SESSION['user'];
+  header( "Refresh:5; url=main.php", true, 303);
   }
 ?>
+
