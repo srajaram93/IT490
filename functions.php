@@ -59,6 +59,16 @@ print "You have successfully registerd. Please return to login page";
     return true;
 }
 }
+function api($today, $zipcode){
+ini_set("allow_url_fpen",1);
+
+$url = "http://data.tmsapi.com/v1.1/movies/showings?startDate=$today&zip=$zipcode&api_key=54jmnjmpmgek7ydjy7984zxq";
+
+$contents = file_get_contents($url);
+echo $contents;
+return $contents;
+
+}
 
 
 function requestProcessor($request)
@@ -77,6 +87,8 @@ function requestProcessor($request)
           return doValidate($request['sessionId']);
         case "register":
           return registration($request['email'],$request['firstname'],$request['lastname'],$request['password']);
+	   case "apicall": 
+	 return api($request['today'], $request['zipcode']);
       }
       return array("returnCode" => '0', 'message'=>"Server received request and processed");
     }
