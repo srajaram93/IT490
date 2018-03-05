@@ -1,5 +1,10 @@
 <?php
 session_start(); 
+ini_set("display_errors", 1);
+ini_set("log_errors",1);
+ini_set("error_log", "/tmp/error.log");
+error_reporting( E_ALL & ~E_DEPRECATED & ~E_STRICT);
+
 if (!isset($_SESSION["user"])){
  header( "Refresh:1; url=login.html", true, 303);
  }
@@ -173,7 +178,7 @@ $(document).ready(function(){
             $.ajax ({ 
             	  
             		type: "GET",
-            		url: "ajax.php",
+            		url: "location.php",
             		data: "u=" +s,
             		
             		beforeSend: function(){$("#B").html("Loading...");},
