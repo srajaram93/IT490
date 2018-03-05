@@ -58,4 +58,20 @@ function registration($email,$firstname,$lastname,$password){
     echo "\n\n";
     echo $argv[0]." END".PHP_EOL;
 }
+function apicall($today,$zipcode){
+    $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
+    if (isset($argv[1]))
+    {
+      $msg = $argv[1];
+    }
+    $request = array();
+    $request['type'] = "apicall";
+    $request['today'] = $today;
+    $request['zipcode'] = $zipcode;
+    $response = $client->send_request($request);
+    return $response;
+    echo "\n\n";
+    echo $argv[0]." END".PHP_EOL;
+}
+
 ?>
