@@ -4,7 +4,6 @@ ini_set("display_errors", 1);
 ini_set("log_errors",1);
 ini_set("error_log", "/tmp/error.log");
 error_reporting( E_ALL & ~E_DEPRECATED & ~E_STRICT);
-
 if (!isset($_SESSION["user"])){
  header( "Refresh:1; url=login.html", true, 303);
  }
@@ -173,7 +172,43 @@ td.text-right {
 <script type= "text/javascript">
 $(document).ready(function(){
   $("#A").click(function(){
-        var s = $("#zip").val();
+/*
+var p_titles = JSON.parse(titles);
+var p_pics = JSON.parse(pics);
+var p_releaseDates = JSON.parse(releaseDates);
+var p_genres = JSON.parse(genres);
+var p_purchLinks = JSON.parse(purchLinks);
+var element; 
+var prefix = 'e';
+for(var i =0; element = document.getElementById(prefix +i); i++)
+{
+	$(element).html('<a href="' + p_purchLinks[i] + '">Purchase tickets</a>');
+}
+var prefix = 'b';
+for(var i =0; element = document.getElementById(prefix +i); i++)
+{
+        $(element).html('<img src ="' + p_pics[i] + '">');
+}
+var els = ['a','c','d'];
+var lis = [p_titles, p_genres, p_releaseDates];
+for (var j = 0; j < els.length; j++)
+{
+	for (var k =0; element = document.getElementById(els[j] + k); k++)
+	{
+		$(element).html(lis[j][k]);
+	}
+
+function hi()
+{
+var re = '<a href="' + p_purchLinks[0] + '">Check out this hot local movie in your area ;)</a>';
+ $("#q").html(re);
+ $("#qq").html("1");
+var a = document.getElementById("q");
+a.href = p_purchLinks[0];
+}
+setTimeout(hi, 7000);
+*/
+      var s = $("#zip").val();
             
             $.ajax ({ 
             	  
@@ -185,9 +220,10 @@ $(document).ready(function(){
                
             		error: function(xhr, status, error) {alert( "error Message: \r\nNumeric code is: " + xhr.status + " \r\nError is " + error );},
             		success: function(result){
-               
+       
+     
                        var w = JSON.parse(result);  
-                       var el;
+ /*                      var el;
 		var prefix = 'a';
  for (var i = 0; el = document.getElementById(prefix + i); i++)
 { var title =  w[i]["title"];      
@@ -217,9 +253,10 @@ $(document).ready(function(){
 { var lnk = '<a href="'+ w[i]["showtimes"][0]["ticketURI"] + '">Purchase Link</a>';       
      $(el).html(lnk);
 }
-},                       
-                        
-     
+}, */                      
+
+
+
        });
      });
 });     
@@ -228,8 +265,7 @@ $(document).ready(function(){
 </style>
 
      
-     <body>
-
+     <body> 
 <div class="container" style="margin-top: 20px;">
     
   <div class="dropdown">
