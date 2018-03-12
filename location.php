@@ -6,10 +6,12 @@ error_reporting( E_ALL & ~E_DEPRECATED & ~E_STRICT);
 
 include ('client.php');
 
-$zipcode = $_GET['u'];
-$today = date("Y-m-d"); 
+$zipcode = $_GET['u']; 
+
+$today  = $_GET['uu'];//date("Y-m-d"); 
 
 
 $response = apicall($today, $zipcode);
-echo $response; 
+$response1 = getData($today, $zipcode); 
+echo json_encode($response1); 
 ?>
