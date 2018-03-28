@@ -297,7 +297,7 @@ for (var j = 0; j < els.length; j++)
 
 function hi()
 {
-var re = '<a href="' + p_purchLinks[0] + '">Check out this hot local movie in your area ;)</a>';
+var re = '<a href="' + p_purchLinks[4][0] + '">Check out this hot local movie in your area ;)</a>';
  $("#q").html(re);
  $("#qq").html("1");
 var a = document.getElementById("q");
