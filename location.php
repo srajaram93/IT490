@@ -6,9 +6,9 @@ error_reporting( E_ALL & ~E_DEPRECATED & ~E_STRICT);
 
 include ('client.php');
 
-$zipcode = $_GET['u']; 
+$zipcode = $_GET['uu']; 
 
-$today  = $_GET['uu'];//date("Y-m-d"); 
+$today  = $_GET['u'];//date("Y-m-d"); 
 
 
 $response = apicall($today, $zipcode);
