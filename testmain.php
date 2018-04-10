@@ -1,13 +1,9 @@
 <?php
 session_start();
-ini_set("display_errors", 1);
-ini_set("log_errors",1);
-ini_set("error_log", "/tmp/error.log");
-error_reporting( E_ALL & ~E_DEPRECATED & ~E_STRICT);
-if (!isset($_SESSION["user"])){
- header( "Refresh:1; url=login.html", true, 303);
- }
-
+if(!isset($_SESSION["user"]))
+{
+	header("Refresh:1; url=login.html", true, 303);
+}
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +23,7 @@ if (!isset($_SESSION["user"])){
 	
 	<style> 
 	body {
-  background-color: #8baee5;
+  background-color: #bfd2ef;
   font-family: "Roboto", helvetica, arial, sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -128,7 +124,7 @@ td {
   font-weight:300;
   font-size:18px;
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
-  border-right: 1px solid #C1C3D1;
+ border-right: 1px solid #C1C3D1;
 }
 td:last-child {
   border-right: 0px;
@@ -255,55 +251,21 @@ $(document).ready(function(){
 		}
 
 	}	
-		
+	
+	function hi()
+	{
+		var re = '<a href="' + parsed_result[4][0] + '">Check out this hot local movie in your area ;)</a>';
+		 $("#q").html(re);
+ 		$("#qq").html("1");
+		var a = document.getElementById("q");
+		a.href = p_purchLinks[0];
+	}
+setTimeout(hi, 7000);
+
                        }, 
      
        });
 
-var p_titles = JSON.parse(titles);
-var p_pics = JSON.parse(pics);
-var p_releaseDates = JSON.parse(releaseDates);
-var p_genres = JSON.parse(genres);
-var p_purchLinks = JSON.parse(purchLinks);
-
-var element; 
-var prefix = 'e';
-
-for(var i =0; element = document.getElementById(prefix +i)  ; i++)
-{
-
-
-        $(element).html('<a href="' + p_purchLinks[i] + '">Purchase tickets</a>');
-}
-
-
-var prefix = 'b';
-
-for(var i =0; element = document.getElementById(prefix +i); i++)
-{
-
-        $(element).html('<img src ="' + p_pics[i] + '">');
-}
-
-var els = ['a','c','d'];
-var lis = [p_titles, p_genres, p_releaseDates];
-for (var j = 0; j < els.length; j++)
-{
-        for (var k =0; element = document.getElementById(els[j] + k); k++)
-        {
-                $(element).html(lis[j][k]);
-        }
-}
-
-function hi()
-{
-var re = '<a href="' + p_purchLinks[4][0] + '">Check out this hot local movie in your area ;)</a>';
- $("#q").html(re);
- $("#qq").html("1");
-var a = document.getElementById("q");
-a.href = p_purchLinks[0];
-}
-setTimeout(hi, 7000);
 
 
      });
@@ -311,7 +273,6 @@ setTimeout(hi, 7000);
      </script>
     
      <body>
-<?php ?>
 
 
 <div class="topnav">
@@ -328,15 +289,13 @@ setTimeout(hi, 7000);
 
  <input type =text name="uu" id = "zip" placeholder = "Zipcode" >
      <button type=button id = "A"> Click for results </button>
-
-
+<form action="logout.php" style="float:right">
+<input type="submit" value="Logout"> 
+</form> 
 
 </div>
 
-<form  action="logout.php">
-<input type="submit" value="Logout"> 
-</form>
-    
+     
     
      
         <div class="container" style="margin-top: 20px;">
@@ -441,5 +400,4 @@ setTimeout(hi, 7000);
 </table>
     
 </body>
-
 
