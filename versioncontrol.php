@@ -8,35 +8,26 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
+echo "What version would you like to install?"; 
+$verno=trim(fgets(STDIN));
+echo "What ip address should this version be installed? "; 
+$ip=trim(fgets(STDIN)); 
 
-function VC($versionnumber, $ipaddress){ 
-exec("sudo rm -r /home/stefan/unzippedversions/*");
-exec("sudo unzip -u /home/stefan/versions/version$versionnumber.zip -d /home/stefan/unzippedversions");
-exec("sshpass -p 'test' rsync -e 'ssh -o StrictHostKeyChecking=no' -arvc /home/stefan/unzippedversions/var/www/html/ stefan@$ipaddress:/var/www/html --delete");
+function VersionControl($verno, $ip){
+    $client = new rabbitMQClient("testRabbitMQ.ini","orcServer");
+    if (isset($argv[1]))
+    {
+      $msg = $argv[1];
+    }
+    $request = array();
+    $request['type'] = "versioncontrol"; 
+    $request['versionno'] ="$verno"; 
+    $request['ip']=$ip; 
+    $client->send_request($request);
+    #$client->send_request($ip);
 
-echo "Version$versionnumber has successfully installed on production server with ip address:$ipaddress"; 
 }
 
-
-
-function requestProcessor($request)
-  {
-      echo "received request".PHP_EOL;
-      var_dump($request);
-      if(!isset($request['type']))
-      {
-        return "ERROR: unsupported message type";
-      }
-      switch ($request['type'])
-      {
-        case "versioncontrol":
-          return VC($request['versionno'],$request['ip']);
-      }
-      return array("returnCode" => '0', 'message'=>"Server received request and processed");
-    }
-    $server = new rabbitMQServer("testRabbitMQ.ini","orcServer");
-    $server->process_requests('requestProcessor');
-    exit();
-
+VersionControl($verno,$ip)
 
 ?>
