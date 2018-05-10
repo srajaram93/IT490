@@ -1,34 +1,50 @@
 <?php
-ini_set("display_errors", 1);
-ini_set("log_errors",1);
-ini_set("error_log", "/tmp/error.log");
-error_reporting( E_ALL & ~E_DEPRECATED & ~E_STRICT);
+error_reporting(-1);
+ini_set('display_errors', false);
 
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
-function authentication($user,$pass){
+function connection($user,$pass){
     $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
     if (isset($argv[1]))
     {
       $msg = $argv[1];
     }
+    else
+    {
+      $msg = "test message";
+    }
+
+
+
     $request = array();
     $request['type'] = "login";
-    $request['username'] = $user;
+    $request['user'] = $user;
     $request['password'] = $pass;
-    $response = $client->send_request($request); 
+    $request['message'] = $msg;
+    $response = $client->send_request($request);
+    //$response = $client->publish($request);
+
+    //echo "client received response: ".PHP_EOL;
+   // print_r($response);
     return $response;
     echo "\n\n";
+
     echo $argv[0]." END".PHP_EOL;
 }
 
-function registration($email,$firstname,$lastname,$password){
+
+function registration($email,$firstname,$lastname,$password, $user, $zipcode){
     $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
     if (isset($argv[1]))
     {
       $msg = $argv[1];
+    }
+    else
+    {
+      $msg = "test message";
     }
     $request = array();
     $request['type'] = "register";
@@ -36,12 +52,19 @@ function registration($email,$firstname,$lastname,$password){
     $request['firstname'] = $firstname;
     $request['lastname'] = $lastname;
     $request['password'] = $password;
+    $request['user'] = $user;
+    $request['zipcode'] = $zipcode;
+    $request['message'] = $msg;
     $response = $client->send_request($request);
+    //$response = $client->publish($request);
+    //echo "client received response: ".PHP_EOL;
+    //print_r($response);
     return $response;
     echo "\n\n";
     echo $argv[0]." END".PHP_EOL;
 }
-function apicall($today,$zipcode){
+
+function apicall($date,$zipcode){
     $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
     if (isset($argv[1]))
     {
@@ -49,7 +72,7 @@ function apicall($today,$zipcode){
     }
     $request = array();
     $request['type'] = "apicall";
-    $request['today'] = $today; 
+    $request['today'] = $date;
     $request['zipcode'] = $zipcode;
     $response = $client->send_request($request);
     return $response;
@@ -57,7 +80,8 @@ function apicall($today,$zipcode){
     echo $argv[0]." END".PHP_EOL;
 }
 
-function getData($today,$zipcode){
+
+function getData($date,$user,$zipcode){
     $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
     if (isset($argv[1]))
     {
@@ -65,13 +89,12 @@ function getData($today,$zipcode){
     }
     $request = array();
     $request['type'] = "getData";
-    $request['today'] = $today;
+    $request['today'] = $date;
+    $request['user'] = $user;
     $request['zipcode'] = $zipcode;
     $response1 = $client->send_request($request);
     return $response1;
     echo "\n\n";
     echo $argv[0]." END".PHP_EOL;
 }
-
-
 ?>
