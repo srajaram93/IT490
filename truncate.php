@@ -1,5 +1,6 @@
+#!/bin/usr/php
 <?php 
-$db = mysqli_connect ( 'localhost', 'testuser', 'test', 'ActiveMembers' ) ;
+$db =mysqli_connect ( 'localhost', 'testuser', 'test', 'ActiveMembers' ) ;
     if (mysqli_connect_errno())
     {
       echo"Failed to connect to MYSQL<br><br> ". mysqli_connect_error();
@@ -7,7 +8,8 @@ $db = mysqli_connect ( 'localhost', 'testuser', 'test', 'ActiveMembers' ) ;
     }
    
     mysqli_select_db($db, 'ActiveMembers' );
-
 mysqli_query($db, "truncate movie"); 
 
+#MESSSAGEEEEEEEE
+#this is a test of my version installer
 ?>
